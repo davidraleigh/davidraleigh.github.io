@@ -1,88 +1,17 @@
 ---
 layout: post
-title: Going Deeper With React Native and iOS Native UI
+title: Geometry Micro-Service
 ---
 
-React-Native is sparse on how to reach deeply into iOS.
+![Logos!!!!](http://davidraleigh.io/content/images/2016/01/Geometry-Micro-Service.png)
 
-[They're great on the basics like sending callbacks and promises from the JS side to the native iOS side, and creating events and properties on the native side that you can make available or subscribe to on the JS side.](https://facebook.github.io/react-native/docs/native-modules-ios.html#content)
+Recently I put myself to the challenge of automating a port of ESRI's [geometry-api-java library](https://github.com/Esri/geometry-api-java) from Java to C#. The [geometry micro-service](http://geometry.fogmodel.io/) demonstration is an application built using the resulting geometry-api-cs library.
 
-But they're really sparse on two deeper topics:
 
-1. How to approach triggering native UI.
-2. How to pass values from native UI interactions back to the JS side.
+The automated port of the library is done using the Sharpen-Eclipse Abstract Syntax Tree library and a whole mess of python scripting. It isn't a pretty thing. Anytime there is a change in the ESRI java code, a build process is triggered and the results are commited to the C# repo. I hosted a TeacmCity Continuous Integration server for the automation and I gotta say, I really love it.
 
-Ultimately, triggering native iOS UI and passing values from native UI interactions back to RN requires two additional steps that aren't covered in the RN documentation. These were the missing steps in building this iOS9 CNContactPicker API I put together(https://github.com/nsipplswezey/react-native-iOS9-contact-picker).
+It took a lot of work to get the Geometry library to compile and pass tests. There are a few operators that don't yet work. Among the non-working are the JSON import and export methods. And that means the [geometry.fogmodel.io](http://geometry.fogmodel.io) demo relies on WKT geometries for importing and exporting geometries. Import and export using ESRIShape binary is working, but that's not really too fun for interactive geometry editing in Leaflet.
 
-And a demo gif of the outcome:
+{<2>}![](/content/images/2016/01/Geometry-Operator-Diagram-2.svg)
 
-![Demo Gif](https://nsipplswezey.github.io/assets/anim.gif)
-
-**Step 1: Put your JS callbacks/promises (RCTSenderResponseBlocks) in a mutable array that can be passed between your Objective-C methods**
-
-```objective-c
-  //RCTNativeUIViewManager.m
-  @implementation RCTNativeUIViewManager.m
-  {
-     NSMutableArray<RCTResponseSenderBlock> *_callbacks;
-  };
-
-  RCT_EXPORT_METHOD(openNativeUIView:(NSDictionary *) args
-                    callback:(RCTResponseSenderBlock)callback)
-  {
-    _callbacks = [NSMutableArray new];
-    [_callbacks addObject:callback];
-```
-
-**Step 2: Walk to the current top view controller before presenting your new native UI view controller.**
-
-```objective-c
-  UIViewController *presentingController = RCTKeyWindow().rootViewController;
-    if(presentingController == nil) {
-       RCTLogError(@"Tried to display contact picker, but there is no application window. args:%@",args);
-    }
-
-    // Walk the chain to the topmost model view controller.
-    while(presentingController.presentedViewController) {
-      presentingController = presentingController.presentedViewController;
-    }
-
-    CNContactPickerViewController *contactPickerController = [CNContactPickerViewController new];
-
-    NSArray *displayedItems = @[CNContactPhoneNumbersKey,CNContactEmailAddressesKey,CNContactBirthdayKey];
-    contactPickerController.delegate = self;
-    contactPickerController.displayedPropertyKeys = displayedItems;
-
-    [presentingController presentViewController:contactPickerController animated:YES completion:nil];
-```
-
-These two steps give you everything you need to implement your ContactPickerViewControllerDelegate, using the callbacks in your array to return the result of the contact selection to the JS side.
-
-```objective-c
-  - (void)contactPicker:(CNContactPickerViewController *)contactPickerController didSelectContactProperty:(CNContactProperty*)contactProperty
-  {
-    //Get the selected phone number and contact name
-    CNContact* contact = contactProperty.contact;
-    CNPhoneNumber* contactPhone = contactProperty.value;
-    NSString* phoneNumber = contactPhone.stringValue;
-    NSString* contactName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
-
-    //Get your callback out of your array
-    RCTResponseSenderBlock callback = _callbacks[0];
-
-    //Pass your contactName and phoneNumber to the callback
-    callback(@[contactName,phoneNumber]);
-
-    //Remove the callback
-    [_callbacks removeObjectAtIndex:0];
-
-  }
-```
-
-Of course there are multiple potential reasons for the sparseness of documentation.
-
-* React-Native wants to replace all native UI with equivalent or better React-Native views, so why provide extensive examples of creating native UI views?
-* Highlighting Objective-C could become a red-herring and turn-off for developers who want to write iOS apps purely in react and javascript.
-* React-Native is young and in active development. Developers haven't had a lot of time to dig in deep, write documentation, examples and blog posts.
-
-[Here's the source in the form of a launchable a demo react-native project that uses the contact picker component.](https://github.com/nsipplswezey/react-native-iOS9-contact-picker)
+The client side of the demo uses React, Ampersand, Leaflet and websockets to allow for submitting requests to a Node server. That Node server then places requests on a RabbitMQ message queue server. A geometry micro-service is connected to the RabbitMQ message queue and processes geometry requests using the geometry-api-cs library. Those processed requests then find their way back to the client via RabbitMQ and websockets. It's pretty groovy stuff.
