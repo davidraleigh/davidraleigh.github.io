@@ -3,7 +3,7 @@ layout: post
 title: Geometry Micro-Service
 ---
 
-![Logos!!!!](http://davidraleigh.io/content/images/2016/01/Geometry-Micro-Service.png)
+![Logos!!!!](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/geometry_micro/Geometry-Micro-Service.png)
 
 Recently I put myself to the challenge of automating a port of ESRI's [geometry-api-java library](https://github.com/Esri/geometry-api-java) from Java to C#. The [geometry micro-service](http://geometry.fogmodel.io/) demonstration is an application built using the resulting geometry-api-cs library.
 
