@@ -1,8 +1,8 @@
 # Site settings
-title: Tech Work Blog`
+title: Map Tech & Code
 email: david.raleigh@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Technical Blog Posts and Tutorials for Surviving in GIS
+  Technical Blog Posts and Tutorials for Programmers in Mapping and GIS
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://davidraleigh.github.io/" # the base hostname & protocol for your site
 twitter_username: fogmodel
