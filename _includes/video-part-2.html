@@ -1,0 +1,171 @@
+<style>
+
+.video-wrapper{
+  position: fixed;
+  border-radius: 3px;
+  padding: 0px;
+  height: 0px;
+  width: 0px;
+
+}
+
+#video-toggle{
+  position: relative;
+  left: 740px;
+  top: 80px;
+}
+
+#player {
+  display: inline-block;
+  position: fixed;
+  bottom: 50px;
+  border-radius: 3px !important;
+  padding: 0px;
+
+}
+
+input[type=checkbox]:checked + iframe {
+  opacity: 0;
+  visibility: hidden;
+}
+
+iframe {
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  -o-transition: opacity 0.25s ease;
+  -ms-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+  border-radius: 3px !important;
+  box-shadow: 0px 20px 80px black;
+  padding: 0px;
+}
+
+</style>
+
+<div class="video-wrapper">
+  <input id="video-toggle" type="checkbox" checked>
+  <iframe id="player" type="text/html" width="740" height="400"
+    src="https://www.youtube.com/embed/cQW4tgQsV_I?enablejsapi=1&origin=https://nsipplswezey.github.io&modestbranding=1&disablekb=1&vq=hd720"
+    frameborder="0"></iframe>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+
+var metaChar = false;
+var exampleKeyLeft = 91;
+var exampleKeyRight = 93;
+var exampleKeyFF = 224;
+var toggleBox = document.getElementById("video-toggle");
+var videoFrame = document.getElementById("player");
+
+var player;
+var playerReady;
+var last;
+
+function onYouTubeIframeAPIReady() {
+
+  player = new YT.Player('player', {
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange,
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  playerReady = true;
+  event.target.setPlaybackQuality('hd720');
+}
+
+function onPlayerStateChange(event) {
+  //console.log('stateChange ' + player.getPlayerState());
+
+  if (event.data == YT.PlayerState.BUFFERING) {
+    event.target.setPlaybackQuality('hd720');
+  }
+
+  var frame = player.getIframe();
+  setTimeout(function(){frame.blur()},0);
+
+}
+
+
+document.body.onkeydown = function(event) {
+  var key = event.keyCode || event.which;
+  var keychar = String.fromCharCode(key);
+
+  var metaKey = (key === exampleKeyLeft || key === exampleKeyRight || key === exampleKeyFF)
+  var notMetaKey = (key != exampleKeyLeft && key != exampleKeyRight && key != exampleKeyFF)
+
+  if(playerReady){
+    var playerState = player.getPlayerState();
+  }
+
+  if (metaKey) {
+    metaChar = true;
+  }
+
+  if (notMetaKey) {
+    if (metaChar) {
+      metaChar = false;
+
+
+      if(keychar === "&"){
+        event.preventDefault();
+
+        toggleBox.checked = !toggleBox.checked;
+
+      }
+
+    } else {
+      //console.log("Key pressed " + key);
+    }
+  }
+
+  //If our toggleBox is not checked, it means our video is up
+  //We'd like space bar to play the youtube video
+  //We'd like left to rewind 5 seconds and right to fast forward 5 seconds
+  if(!toggleBox.checked && key === 32){
+    event.preventDefault();
+
+    if(playerState === -1 || playerState === 0 ||  playerState === 2 || playerState === 5){
+
+      last = "play";
+      player.playVideo();
+
+    }
+
+    if(playerState === 1){
+      last = "pause";
+      player.pauseVideo();
+    }
+
+    if(playerState === 3){
+
+      if(last === "pause"){
+        player.playVideo();
+        last = "play";
+      } else if(last === "play"){
+        player.pauseVideo()
+        last = "pause";
+      }
+    }
+
+
+  }
+
+
+}
+
+document.body.onkeyup = function (event) {
+  var key = event.keyCode || event.which;
+  var metaKey = (key === exampleKeyLeft || key === exampleKeyRight || key === exampleKeyFF)
+
+  if (metaKey) {
+    metaChar = false;
+  }
+}
+
+
+</script>
