@@ -1,12 +1,12 @@
 # Site settings
-title: Idea Store; Technical Blog;
-email: nsipplswezey@gmail.com
+title: Tech Work Blog`
+email: david.raleigh@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Using technology to create a useful experience isn't easy. Full-stack software engineer. Tool agnostic. Lately it's react, react-native, NodalJS, computer vision and machine learning.
+  Technical Blog Posts and Tutorials for Surviving in GIS
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://nsipplswezey.github.io/" # the base hostname & protocol for your site
-twitter_username: null
-github_username:  nsipplswezey
+url: "https://davidraleigh.github.io/" # the base hostname & protocol for your site
+twitter_username: @fogmodel
+github_username:  davidraleigh
 
 # Build settings
 markdown: kramdown
