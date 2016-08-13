@@ -1,5 +1,13 @@
 ---
 layout: post
+tags:
+- geometry
+- GIS
+- rabbitmq
+- leaflet
+- docker
+- node
+- mono
 title: Geometry Micro-Service
 ---
 
