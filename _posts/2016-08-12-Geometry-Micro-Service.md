@@ -1,14 +1,6 @@
 ---
 layout: post
 description: Building a .net c# computational geometry micro-service with rabbitmq, leaflet, react, webpack, docker and node
-keywords:
-- geometry
-- GIS
-- rabbitmq
-- leaflet
-- docker
-- node
-- mono
 title: Geometry Micro-Service
 ---
 
