@@ -1,11 +1,9 @@
 ---
 layout: page
-title: About Nick Sippl-Swezey
+title: About David Raleigh
 permalink: /about/
 ---
 
 Software engineer.
 
-Currently: using react-native to build mobile apps that know what they're looking at.
-
-Previously: computational modeling for research and education @UCBerkeley, clinical trials for lasers and vision @UCSF, product and engineering @novamodeler, hacker in residence @hackreactor.
+David's work at Descartes Labs draws on his background in geodesy, GIS, and software engineering. Prior to Descartes, David worked as a developer on computational geometry algorithms, collision avoidance software, and geographic transformation libraries for ESRI and NASA.
