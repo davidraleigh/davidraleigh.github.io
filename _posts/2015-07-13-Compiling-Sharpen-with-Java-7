@@ -1,3 +1,10 @@
+---
+layout: post
+description: Using multiple versions of Java JDK for development to allow use of Sharpen Java to C# conversion
+title: Compiling Sharpen with Java 7
+---
+
+
 ![Java logo so pretty](https://davidraleigh.github.io/assets/jenv/Java_logo_and_wordmark.svg)
 
 Sharpen is a conversion utility for taking code from Java to C#. I've been playing around with converting ESRI's geometry library to C#, but there are a number of for loops that have multiple declarations in the initialization section and that's causing me all sorts of trouble. If there was more documentation for Sharpen I might figure this out easily. Instead I'm going to jump into the source code and see what's going on.
