@@ -4,7 +4,7 @@ description: Solving git Merge Conflicts with a GUI Tool like diffmerge or subli
 title: Solving git Merge Conflicts with a GUI Tool
 ---
 
-![This image is huuuuuge!](http://davidraleigh.io/content/images/2015/07/foundingfather_v2.png)
+![This image is huuuuuge!](https://davidraleigh.github.io/assets/git-merge/foundingfather_v2.png)
 
 
 **Merging in git is almost as scary as merging in Dallas:**![Photo Credit: Dallas Observer](http://davidraleigh.io/content/images/2014/12/Trafficpocalypse-thumb-565x317.jpg)
