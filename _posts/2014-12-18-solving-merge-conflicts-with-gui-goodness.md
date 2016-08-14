@@ -1,7 +1,13 @@
-{<1>}![This image is huuuuuge!](/content/images/2015/07/foundingfather_v2.png)
+---
+layout: post
+description: Solving git Merge Conflicts with a GUI Tool like diffmerge or sublime 
+title: Solving git Merge Conflicts with a GUI Tool
+---
+
+{<1>}![This image is huuuuuge!](http://davidraleigh.io/content/images/2015/07/foundingfather_v2.png)
 
 
-**Merging in git is almost as scary as merging in Dallas:**![Photo Credit: Dallas Observer](/content/images/2014/12/Trafficpocalypse-thumb-565x317.jpg)
+**Merging in git is almost as scary as merging in Dallas:**![Photo Credit: Dallas Observer](http://davidraleigh.io/content/images/2014/12/Trafficpocalypse-thumb-565x317.jpg)
 
 
 Wrecking a merge can feel as bad as breaking the build. The best way to avoid the process of a manual merge is to be proactive about commits and pull requests. But there will be times when you and another developer are in lightspeed-productivity-mode on the same file, and when it comes to spinning down the hyperdrives, one of you may be met with the heinous task of joining your histories together.
@@ -10,9 +16,9 @@ Integrating a GUI merge tool into your git workflow is a breeze. If you're a ter
 
 In order to visualize the merge you'll need your GUI. If you've got money to burn($25) you can buy yourself the fancy [Sublimerge](http://www.sublimerge.com/). If you're frugal like me, you'll need to download the [DiffMerge](https://sourcegear.com/diffmerge/) application from SourceGear (DiffMerge is Mac only, but similar softwares exist for Windows). For DiffMerge select the *OS X 10.6+ Installer (Intel)*  package installer (not the DMG). The reason to not install from the DMG is that the installation won't do all the fancy symlinks that the git client will require in order to call DiffMerge from the terminal. 
 
-**DiffMerge GUI experience**![DiffMerge example](/content/images/2014/12/DiffMerge.png)
+**DiffMerge GUI experience**![DiffMerge example](http://davidraleigh.io/content/images/2014/12/DiffMerge.png)
 
-**Sublimerge GUI experience**![Sublimerge example](/content/images/2014/12/sublimerge.png)
+**Sublimerge GUI experience**![Sublimerge example](http://davidraleigh.io/content/images/2014/12/sublimerge.png)
 
 After you've downloaded your GUI of choice with all it's fancy symlinks you're ready to prep your git to interact with GUI goodness. You'll need to add a few lines to your *.gitconfig*. If you're not a terminal lover I suggest editing your *.gitconfig* with *nano* by using the following command at your terminal: `nano ~/.gitconfig`.
 
@@ -67,4 +73,4 @@ Once you've saved and exited your gui merge tool, you need to take the next step
 
 **This post was completed as a part of an extreme blogging session, so it may contain errors or technical innaccuracies. Git with caution!!**
 
-**Don't code like this guy bus drives.**![Photo Credit: Scoop Empire](/content/images/2014/12/bottleneck1.jpg)
+**Don't code like this guy bus drives.**![Photo Credit: Scoop Empire](http://davidraleigh.io/content/images/2014/12/bottleneck1.jpg)
