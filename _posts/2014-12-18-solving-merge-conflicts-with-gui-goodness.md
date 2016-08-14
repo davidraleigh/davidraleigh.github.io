@@ -1,6 +1,6 @@
 ---
 layout: post
-description: Solving git Merge Conflicts with a GUI Tool like diffmerge or sublime 
+description: Solving git Merge Conflicts with .gitconfig and a GUI Tool like diffmerge or sublime 
 title: Solving git Merge Conflicts with a GUI Tool
 ---
 
