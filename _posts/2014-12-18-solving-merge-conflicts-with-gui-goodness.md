@@ -22,7 +22,8 @@ In order to visualize the merge you'll need your GUI. If you've got money to bur
 
 After you've downloaded your GUI of choice with all it's fancy symlinks you're ready to prep your git to interact with GUI goodness. You'll need to add a few lines to your *.gitconfig*. If you're not a terminal lover I suggest editing your *.gitconfig* with *nano* by using the following command at your terminal: `nano ~/.gitconfig`.
 
-If you're following the DiffMerge path you'll need to add the following lines to your *.gitconfig*:
+If you're following the DiffMerge path you'll need to add the following lines to your __.gitconfig__:
+
 ```bash
 [diff]
   tool = diffmerge
@@ -37,7 +38,8 @@ If you're following the DiffMerge path you'll need to add the following lines to
   cmd = /usr/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
 ```
 
-If you're choosing the slick Sublimerge gui you'll need to add the following lines to your *.gitconfig*:
+If you're choosing the slick Sublimerge gui you'll need to add the following lines to your __.gitconfig__:
+
 ```bash
 [diff]
   tool = sublimerge
