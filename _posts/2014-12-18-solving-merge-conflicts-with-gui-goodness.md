@@ -21,7 +21,7 @@ After you've downloaded your GUI of choice with all it's fancy symlinks you're r
 
 If you're following the DiffMerge path you'll need to add the following lines to your __.gitconfig__:
 
-```bash
+```shell
 [diff]
   tool = diffmerge
 [merge]
@@ -37,7 +37,7 @@ If you're following the DiffMerge path you'll need to add the following lines to
 
 If you're choosing the slick Sublimerge gui you'll need to add the following lines to your __.gitconfig__:
 
-```bash
+```shell
 [diff]
   tool = sublimerge
 [merge]
@@ -58,7 +58,7 @@ Here is an example of my own .gitconfig file (be sure to not use my email addres
 
 So now you're all set to merge conflicts. After you've attempted to merge and then received the dreaded `Failed to merge in the changes`, you type in `git mergetool` at the terminal and you'll receive a prompt like below (to call `git mergetool` you must be in the directory of your git repository):
 
-```bash
+```shell
 Merging:
 client/js/jadegrizzly.js
 client/templates/create.html
