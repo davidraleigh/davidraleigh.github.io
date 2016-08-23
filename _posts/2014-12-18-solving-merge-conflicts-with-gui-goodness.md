@@ -54,7 +54,7 @@ trustExitCode = true
 Using the above *.gitconfig* files means you'll be preserving originals as backups with a *.orig* extension type. Add `*.orig` to your project *.gitignore* to avoid the annoyance of backup files sneaking into your repository.
 
 Here is an example of my own .gitconfig file (be sure to not use my email address. you'll confuse your coworkers!):
-{% gist:c6be74b6339d2ce85c6c %}
+{% gist c6be74b6339d2ce85c6c %}
 
 So now you're all set to merge conflicts. After you've rebased and you've received the dreaded `Failed to merge in the changes` you type in `git mergetool` at the terminal and you'll receive a prompt like below (to call `git mergetool` you must be in the directory of your git repository):
 
