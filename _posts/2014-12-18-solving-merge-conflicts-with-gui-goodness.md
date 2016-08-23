@@ -56,7 +56,7 @@ Using the above *.gitconfig* files means you'll be preserving originals as backu
 Here is an example of my own .gitconfig file (be sure to not use my email address. you'll confuse your coworkers!):
 <script src="https://gist.github.com/davidraleigh/c6be74b6339d2ce85c6c.js"></script>
 
-So now you're all set to merge conflicts. After you've attempted to merge and then received the dreaded `Failed to merge in the changes`, you type in `git mergetool` at the terminal and you'll receive a prompt like below (to call `git mergetool` you must be in the directory of your git repository):
+So now you're all set to merge conflicts. After you've attempted to merge and then received the dreaded `Failed to merge in the changes` message, you type in `git mergetool` at the terminal and you'll receive a prompt like below (to call `git mergetool` you must be in the directory of your git repository):
 
 ```shell
 Merging:
@@ -75,5 +75,7 @@ Once you've saved and exited your gui merge tool, you need to take the next step
 
 **Don't merge like this guy bus drives.**![Photo Credit: Scoop Empire](https://davidraleigh.github.io/assets/git-merge/bottleneck1.jpg)
 
-**This post was completed as a part of an extreme blogging session, so it may contain errors or technical innaccuracies. Git with caution!! Here's a huge image of octo-founder**
+**This post was completed as a part of an extreme blogging session, so it may contain errors or technical innaccuracies. Git with caution!!**
+
+Here's a huge image of octo-founder:
 ![This image is huuuuuge!](https://davidraleigh.github.io/assets/git-merge/foundingfather_v2.png)
