@@ -10,7 +10,9 @@ github_username:  davidraleigh
 
 # Build settings
 markdown: kramdown
-highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 
 gems:
   - jekyll-seo-tag
