@@ -4,9 +4,6 @@ description: Solving git Merge Conflicts with .gitconfig and a GUI Tool like dif
 title: Solving git Merge Conflicts with a GUI Tool
 ---
 
-![This image is huuuuuge!](https://davidraleigh.github.io/assets/git-merge/foundingfather_v2.png)
-
-
 **Merging in git is almost as scary as merging in Dallas:**![Photo Credit: Dallas Observer](https://davidraleigh.github.io/assets/git-merge/Trafficpocalypse-thumb-565x317.jpg)
 
 
@@ -16,7 +13,6 @@ Integrating a GUI merge tool into your git workflow is a breeze. If you're a ter
 
 In order to visualize the merge you'll need your GUI. If you've got money to burn($25) you can buy yourself the fancy [Sublimerge](http://www.sublimerge.com/). If you're frugal like me, you'll need to download the [DiffMerge](https://sourcegear.com/diffmerge/) application from SourceGear (DiffMerge is Mac only, but similar softwares exist for Windows, I use [WinMerge](http://winmerge.org/?lang=en)). For DiffMerge select the [*OS X 10.6+ Installer (Intel)*](http://download.sourcegear.com/DiffMerge/4.2.1/DiffMerge.4.2.1.1013.intel.stable.pkg) package installer (not the DMG). The reason to install from the `pkg` and not install from the `dmg` is that the `dmg` installation won't do all the fancy symlinks that the git client will require in order to call DiffMerge from the terminal. 
 
-Below are demonstrations of what these merge tools look like.
 **DiffMerge GUI experience**![DiffMerge example](https://davidraleigh.github.io/assets/git-merge/DiffMerge.png)
 
 **Sublimerge GUI experience**![Sublimerge example](https://davidraleigh.github.io/assets/git-merge/sublimerge.png)
@@ -57,6 +53,9 @@ trustExitCode = true
 
 Using the above *.gitconfig* files means you'll be preserving originals as backups with a *.orig* extension type. Add `*.orig` to your project *.gitignore* to avoid the annoyance of backup files sneaking into your repository.
 
+Here is an example of my own .gitconfig file (be sure to not use my email address. you'll confuse your coworkers!):
+{% gist:c6be74b6339d2ce85c6c %}
+
 So now you're all set to merge conflicts. After you've rebased and you've received the dreaded `Failed to merge in the changes` you type in `git mergetool` at the terminal and you'll receive a prompt like below (to call `git mergetool` you must be in the directory of your git repository):
 
 ```bash
@@ -74,6 +73,7 @@ Hitting enter will pull up your awesome new merge tool and allow you to modify y
 
 Once you've saved and exited your gui merge tool, you need to take the next steps in git to complete your merge. But the hard part should be complete!
 
-**This post was completed as a part of an extreme blogging session, so it may contain errors or technical innaccuracies. Git with caution!!**
+**Don't merge like this guy bus drives.**![Photo Credit: Scoop Empire](https://davidraleigh.github.io/assets/git-merge/bottleneck1.jpg)
 
-**Don't code like this guy bus drives.**![Photo Credit: Scoop Empire](https://davidraleigh.github.io/assets/git-merge/bottleneck1.jpg)
+**This post was completed as a part of an extreme blogging session, so it may contain errors or technical innaccuracies. Git with caution!! Here's a huge image of octo-founder**
+![This image is huuuuuge!](https://davidraleigh.github.io/assets/git-merge/foundingfather_v2.png)
