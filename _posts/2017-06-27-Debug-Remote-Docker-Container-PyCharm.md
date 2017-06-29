@@ -5,14 +5,23 @@ Say I have a Docker container running in Google Cloud Platform. Inside that cont
 
 But if I want to use the Remote Debugger feature of PyCharm it becomes a bit more complicated. Below are the hacked together steps for having a GCP development machine host a Docker container where my library can be debugged with PyCharm.
 
+To complete this tutorial you'll need a GCP account with Admin access, you'll need to have gcloud tools installed on your development machine, and you'll need to have PyCharm Professional (the standard free edition doesn't have remote debugging installed).
+
 ### Firewall Rules
-First off you'll need to create a new firewall rule for your project so you can ssh into the Docker Container's port. We'll use the port number 52022. Go to the Table of Contents in Google cloud and select Networking:
+First off you'll need to create a new firewall rule for your project so you can ssh into the Docker Container's port. We'll use the port number 52022. Go to the table of contents in Google cloud and select Networking and then the Firewall Rules:
 ![Networking/Firewall](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/firewall-settings-1.png)
 
 The fields you'll have to edit are `Name`, `Target Tags`, `Source IP ranges`, and `Protocols and ports`. You should add a description, but that's optional. If you want to specify that only your IP address can access the machine you should define the `Source IP ranges` as something besides `0.0.0.0/0`. Below you can see all the settings I've used, if you copy all these settings this tutorial should work:
 ![Specific SSH Firewall Settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/firewall-settings-2.png)
 
 ### Create VM with Proper Permissions
+Go to Compute Engine in GCP console table of contents and select `Create an Instance`. You'll want to change the `Boot disk` to be a docker enabled image (in this case the ChromiumOS) and maybe increase the size if you plan on using this for development of lots of different docker images:
+
+![Boot Disk Selection](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/container-optimized-disk.png)
+
+Under the `Firewall` section of your instance creation dialog select the `Allow HTTP traffic` field. You may need to check with your Networking Firewall rules to make sure that port 80 is open for your IP address (by default GCP projects make it open to all addresses). Below the `Firewall` section you'll need to select the `Networking` tab and place the `Target Tags` you defined earlier in the Firewall section of this tutorial (mine was `container-ssh`) in the `Network tags` field:
+
+![Network Tags](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/network-tags.png)
 
 
 ### Git Clone your Code onto the VM
