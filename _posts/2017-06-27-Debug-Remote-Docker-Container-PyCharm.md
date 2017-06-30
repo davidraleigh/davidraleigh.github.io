@@ -23,6 +23,7 @@ Under the `Firewall` section of your instance creation dialog select the `Allow 
 
 ![Network Tags](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/network-tags.png)
 
+If you want to use a ssh key other than the one issued to you when you installed and logged on to your project using `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`
 
 ### Git Clone your Code onto the VM
 An alternative is for you to build your image, push it to Google Container Registry and pull it to your dev machine
