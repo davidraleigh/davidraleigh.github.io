@@ -78,14 +78,14 @@ gcloud compute copy-files ~/.ssh/google_compute_engine.pub davidraleigh@remote-d
 #### Get PyCharm Helper Functions on Remote Development VM (optional)
 The last thing you'll need for this all to work is to get a hold of the pycharm remote debug helpers that Pycharm installs on any remote debug machine. This is a little tricky. How I've done this in the past is that I've setup a remote debug VM with PyCharm and then gone into that remote VM and copied the ~/.pycharm_helpers to a google storage location for later use. It'd be nice if pycharm just provided a distribution location for those helpers instead of having PyCharm copy them over the first time you connect to a remote machine. If you can't get a copy of the `.pycharm_helpers` directory you can just make an empty directory.
 
-*Saves Time Connecting to Remote Machine First Time*
+*(Optional) Saves Time Connecting to Remote Machine First Time*
 ```bash
 gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
 cd ~/remote-debug-docker/
 sudo gsutil cp -r gs://raleigh-data/2017.1.1/.pycharm_helpers ./
 ```
 
-*If You Can't Get a Copy of the `.pycharm_helpers` Directory*
+*If Above Optional Doesn't Work for You*
 ```bash
 gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
 cd ~/remote-debug-docker/
@@ -93,8 +93,26 @@ sudo mkdir pycharm_helpers
 ```
 
 #### Build Your Debug Image and Get it Running
-Now you've tagged your development image with the name `test-image` and you've gotten 
+Now you've tagged your development image with the name `test-image` and you've gotten your `remote-debug-docker` directory setup for creating a Docker container you can ssh into.
 
+First let's build the debug-image:
+```bash
+gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
+cd ~/remote-debug-docker/
+sudo docker build -t debug-image .
+```
+
+Now that we have built our image let's run it and hook up all the ports so we can access it from outside GCP. The port 52022 of our remote VM is mapped to the Docker container's port 22. And for the purpose of this tutorial we're using flask and therefore mapping the port 5000 from the Docker container to the VM's port 80. `--privileged` is necessary for running supervisord:
+```bash
+gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
+cd ~/remote-debug-docker/
+sudo docker run -p 52022:22 -p 80:5000 -it --privileged --name=temp-python-debug debug-image
+```
+
+Now you should be able to ssh into this container from your local dev machine. I've assigned my remote dev VM a static ip address in Google in order to minimize hassle if the machine shuts down (of course this ip address will be abandoned after I've finished writing the blog):
+```bash
+ssh -i ~/.ssh/google_compute_engine root@130.211.210.118 -p 52022
+```
 
 ### Setup Pycharm Development Environment
 
