@@ -114,7 +114,17 @@ Now you should be able to ssh into this container from your local dev machine. I
 ssh -i ~/.ssh/google_compute_engine root@130.211.210.118 -p 52022
 ```
 
-### Setup Pycharm Development Environment
+### Setup PyCharm Development Environment
+In PyCharm start a new Flask project called `blog-remote-debug-python`. Leave the `Interpreter` option set to whatever is the current default of your PyCharm environment. Update the `blog-remote-debug-python.py` file to match the one in this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/blog-remote-debug-python.py). You'll notice that the `__main__` method has been changed from :
+```python
+app.run()
+```
+to : 
+```python
+app.run(debug=True, host='0.0.0.0')
+```
 
+In PyCharm you should be able to select `^R` on your keyboard and run this flask project and open your browser to http://0.0.0.0:5000/ and see a "Hello World!" message.
 
+Now let's add a Dockerfile to the project.
 ### Rebuilding Image
