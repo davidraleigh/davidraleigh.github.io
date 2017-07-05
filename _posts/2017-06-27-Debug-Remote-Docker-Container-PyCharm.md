@@ -142,7 +142,7 @@ docker run -p 5000:5000 -it --name=temp-c-flask temp
 Open your browser to http://0.0.0.0:5000/ and again you should see a "Hello World!" message.
 
 Now that we know the image can create a functioning docker container let's see how this works with PyCharm's remote debugger settings. In `PyCharm->Preferences` we'll select the `Project Interpreter` from the lefthand table of contents. To the right of the currently defined interpreter is a cog symbol, like a gear, select that cog button:
-
+![Cog Button](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/project_interpreter_4.png)
 
 
 
