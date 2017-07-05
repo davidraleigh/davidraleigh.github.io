@@ -38,18 +38,39 @@ sudo git clone https://github.com/davidraleigh/blog-remote-debug-python
 Once your source code is there you'll want to build your Docker image:
 ```bash
 cd /opt/src/blog-remote-debug-python
-sudo docker build -t repo-image .
+sudo docker build -t your-special-image-name .
+sudo docker tag your-special-image-name test-image
 ```
 
 #### Pull an Updated Image
 From Docker Hub Registry or from Google Container Registry you can pull an image with recent source code for your project to your Development VM (this example uses GCR):
 ```bash
 sudo gcloud docker -a
-sudo gcloud docker pull gcr.io/your-project-name/repo-image
-sudo docker tag gcr.io/your-project-name/repo-image repo-image
+sudo gcloud docker pull gcr.io/your-project-name/your-special-image-name
+sudo docker tag gcr.io/your-project-name/your-special-image-name test-image
 ```
 
-### Copy Debug Dockerfile, supervisord Configurations and Pycharm Helpers
+### Create a Debug Image
+In order to debug your code with PyCharm you must be able to SSH into the running docker container. Rather than screw up your project's Dockerfile, we'll just use a Dockerfile that inherits from the image you want to use as your remote debugging image.
+
+The easiest way to do this is to use the Dockerfile from the https://github.com/davidraleigh/remote-debug-docker repo. In your VM, clone this repo and follow the repo's instructions:
+
+Copy the google cloud public ssh key that you created when you installed `gcloud` and setup your account and configuration (at some point you should have executed the following commands `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`). So from your local dev maching you'll execute this command:
+```bash
+gcloud compute copy-files ~/.ssh/google_compute_engine.pub davidraleigh@raleigh-dev-1604:/home/davidraleigh/debug-docker/ --zone=us-central1-b
+
+```
+
+
+```bash
+cd /opt/src
+sudo git clone https://github.com/davidraleigh/remote-debug-docker
+cd remote-debug-docker
+
+```
+
+Copy Debug Dockerfile, supervisord Configurations and Pycharm Helpers
+
 
 If you want to use a ssh key other than the one issued to you when you installed and logged on to your project using `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`
 
