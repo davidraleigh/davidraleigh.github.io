@@ -115,7 +115,11 @@ ssh -i ~/.ssh/google_compute_engine root@130.211.210.118 -p 52022
 ```
 
 ### Setup PyCharm Development Environment
-In PyCharm start a new Flask project called `blog-remote-debug-python`. Leave the `Interpreter` option set to whatever is the current default of your PyCharm environment. Update the `blog-remote-debug-python.py` file to match the one in this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/blog-remote-debug-python.py). You'll notice that the `__main__` method has been changed from :
+In PyCharm start a new Flask project called `blog-remote-debug-python`. Leave the `Interpreter` option set to whatever is the current default of your PyCharm environment. 
+
+
+
+Update the `blog-remote-debug-python.py` file to match the one in this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/blog-remote-debug-python.py). You'll notice that the `__main__` method has been changed from :
 ```python
 app.run()
 ```
@@ -124,7 +128,21 @@ to :
 app.run(debug=True, host='0.0.0.0')
 ```
 
-In PyCharm you should be able to select `^R` on your keyboard and run this flask project and open your browser to http://0.0.0.0:5000/ and see a "Hello World!" message.
+In PyCharm you should be able to select `^R` on your keyboard and run this flask project and open your browser to http://0.0.0.0:5000/ and see a "Hello World!" message. Press the "Stop" button in PyCharm's Navigation Bar to end the Flask app.
 
-Now let's add a Dockerfile to the project.
+Now let's add a Dockerfile to the project. Copy the file from this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/Dockerfile) into your `blog-remote-debug-python` directory.
+
+On your local dev machine build this image and run it:
+```bash
+cd ~/my-fancy-code-location/blog-remote-debug-python
+docker build -t local-test-image .
+docker run -p 5000:5000 -it --name=temp-c-flask temp
+```
+
+Open your browser to http://0.0.0.0:5000/ and again you should see a "Hello World!" message.
+
+Now that we know the image can create a functioning docker container let's see how this works with PyCharm's remote debugger settings.
+
+
+
 ### Rebuilding Image
