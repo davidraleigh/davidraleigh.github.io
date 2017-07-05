@@ -58,6 +58,7 @@ sudo docker tag gcr.io/your-project-name/your-special-image-name test-image
 ### Create a Debug Image
 In order to debug your code with PyCharm you must be able to SSH into the running docker container. Rather than screw up your project's Dockerfile, we'll just use a Dockerfile that inherits from the image you want to use as your remote debugging image.
 
+#### Get a Debugable SSH Server Enabled Dockerfile Project
 The easiest way to do this is to use the Dockerfile and associated supervisord configuration files from the https://github.com/davidraleigh/remote-debug-docker repo. In your VM, clone this repo and follow the repo's instructions:
 
 ```bash
@@ -67,18 +68,32 @@ cd ~/
 sudo git clone https://github.com/davidraleigh/remote-debug-docker
 ```
 
+#### Copy in SSH Public Key
 In order to build a Docker image that has the ssh public key to approve your request you'll need to print it to the `a uthorized_keys` fiel. Copy your google cloud `google_compute_engine.pub` public ssh key to your remote VM. It is the key that google created when you installed `gcloud` and setup your account and configuration for GCP (at some point you should have executed the following commands: `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`). So from your local dev maching you'll execute the following commands:
 ```bash
 # remote-debug-docker should have been created in your previous ssh and git clone in your remote VM
 gcloud compute copy-files ~/.ssh/google_compute_engine.pub davidraleigh@remote-debug-demo:/home/davidraleigh/remote-debug-docker/ --zone=us-central1-f
 ```
 
-The last thing you'll need for this all to work is to get a hold of the pycharm remote debug helpers that Pycharm installs on any remote debug machine. This is a little tricky. how I've done this in the past is that I've setup a remote debug VM with PyCharm and then gone into that remote VM and copied the ~/.pycharm_helpers to a google storage location for later use. It'd be nice if pycharm just provided a distribution location for that. I had one in a location calle
+#### Get PyCharm Helper Functions on Remote Development VM (optional)
+The last thing you'll need for this all to work is to get a hold of the pycharm remote debug helpers that Pycharm installs on any remote debug machine. This is a little tricky. How I've done this in the past is that I've setup a remote debug VM with PyCharm and then gone into that remote VM and copied the ~/.pycharm_helpers to a google storage location for later use. It'd be nice if pycharm just provided a distribution location for those helpers instead of having PyCharm copy them over the first time you connect to a remote machine. If you can't get a copy of the `.pycharm_helpers` directory you can just make an empty directory.
 
-Copy Debug Dockerfile, supervisord Configurations and Pycharm Helpers
+__Saves Time Connecting to Remote Machine First Time__
+```bash
+gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
+cd ~/remote-debug-docker/
+sudo gsutil cp -r gs://raleigh-data/2017.1.1/.pycharm_helpers ./
+```
 
+__If You Can't Get a Copy of the `.pycharm_helpers` Directory__
+```bash
+gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
+cd ~/remote-debug-docker/
+sudo mkdir pycharm_helpers
+```
 
-If you want to use a ssh key other than the one issued to you when you installed and logged on to your project using `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`
+#### Build Your Debug Image and Get it Running
+Now you've tagged your development image with the name `test-image` and you've gotten 
 
 
 ### Setup Pycharm Development Environment
