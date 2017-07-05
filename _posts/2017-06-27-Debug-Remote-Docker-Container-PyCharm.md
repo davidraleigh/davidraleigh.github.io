@@ -23,12 +23,35 @@ Under the `Firewall` section of your instance creation dialog select the `Allow 
 
 ![Network Tags](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/network-tags.png)
 
-If you want to use a ssh key other than the one issued to you when you installed and logged on to your project using `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`
+Once you've finished these settings `Create` your VM and you should be ready to get your VM ready for debugging.
 
-### Git Clone your Code onto the VM
-An alternative is for you to build your image, push it to Google Container Registry and pull it to your dev machine
+### Get a Docker Image with Updated Source Code on your Development VM
+
+#### Git Clone your Code onto the VM
+SSH into your VM and use git to clone the following repo:
+```bash
+sudo mkdir /opt/src
+cd /opt/src
+sudo git clone https://github.com/davidraleigh/blog-remote-debug-python
+```
+
+Once your source code is there you'll want to build your Docker image:
+```bash
+cd /opt/src/blog-remote-debug-python
+sudo docker build -t repo-image .
+```
+
+#### Pull an Updated Image
+From Docker Hub Registry or from Google Container Registry you can pull an image with recent source code for your project to your Development VM (this example uses GCR):
+```bash
+sudo gcloud docker -a
+sudo gcloud docker pull gcr.io/your-project-name/repo-image
+sudo docker tag gcr.io/your-project-name/repo-image repo-image
+```
 
 ### Copy Debug Dockerfile, supervisord Configurations and Pycharm Helpers
+
+If you want to use a ssh key other than the one issued to you when you installed and logged on to your project using `gcloud auth login`, `gcloud auth activate-service-account` and `gcloud config set project`
 
 
 ### Setup Pycharm Development Environment
