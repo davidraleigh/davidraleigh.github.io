@@ -78,14 +78,14 @@ gcloud compute copy-files ~/.ssh/google_compute_engine.pub davidraleigh@remote-d
 #### Get PyCharm Helper Functions on Remote Development VM (optional)
 The last thing you'll need for this all to work is to get a hold of the pycharm remote debug helpers that Pycharm installs on any remote debug machine. This is a little tricky. How I've done this in the past is that I've setup a remote debug VM with PyCharm and then gone into that remote VM and copied the ~/.pycharm_helpers to a google storage location for later use. It'd be nice if pycharm just provided a distribution location for those helpers instead of having PyCharm copy them over the first time you connect to a remote machine. If you can't get a copy of the `.pycharm_helpers` directory you can just make an empty directory.
 
-__Saves Time Connecting to Remote Machine First Time__
+*Saves Time Connecting to Remote Machine First Time*
 ```bash
 gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
 cd ~/remote-debug-docker/
 sudo gsutil cp -r gs://raleigh-data/2017.1.1/.pycharm_helpers ./
 ```
 
-__If You Can't Get a Copy of the `.pycharm_helpers` Directory__
+*If You Can't Get a Copy of the `.pycharm_helpers` Directory*
 ```bash
 gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
 cd ~/remote-debug-docker/
