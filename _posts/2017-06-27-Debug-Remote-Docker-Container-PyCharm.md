@@ -165,5 +165,5 @@ In the `Deployment` dialog, the `Connection` tab should be filled out similarily
 ![deployment](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment.png)
 
 The *Mappings* tab in the *Deployment* diaglog should look the same as the Project Path Mappings from above:
-![Deployment Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_path_mappings.png)
+![Deployment Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_path_mapping.png)
 ### Rebuilding Image
