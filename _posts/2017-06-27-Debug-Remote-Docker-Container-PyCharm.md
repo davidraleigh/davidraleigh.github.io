@@ -159,5 +159,9 @@ Technically, the above Path Mappings step could be skipped by doing the Deployme
 In order to keep your local source code and your remote source in sync you have to setup a `Deployment Configuration`. This isn't a deployment in the sense of something that your users will interact with. Select `Tools->Deployment->Configuration`:
 ![Deployment configuration](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_configuration.png)
 
+In the `Add Server` dialog give your server a name and from the `Type` dropdown select `SFTP`. 
+
+In the `Deployment` dialog, the `Connection` tab should be filled out similarily to the the `Configure Remote Python Interpreter` dialog. for the `Root Path` field select the base path for this tutorial. Once you've filled out the fields press the `Test FTP connection...` button to confirm you're able to connect:
+![deployment](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment.png)
 
 ### Rebuilding Image
