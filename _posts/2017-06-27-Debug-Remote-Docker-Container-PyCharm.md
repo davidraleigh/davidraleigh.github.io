@@ -164,6 +164,14 @@ In the `Add Server` dialog give your server a name and from the `Type` dropdown 
 In the `Deployment` dialog, the `Connection` tab should be filled out similarily to the the `Configure Remote Python Interpreter` dialog. for the `Root Path` field select the base path for this tutorial. Once you've filled out the fields press the `Test FTP connection...` button to confirm you're able to connect:
 ![deployment](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment.png)
 
-The *Mappings* tab in the *Deployment* diaglog should look the same as the Project Path Mappings from above:
+The __Mappings__ tab in the __Deployment__ diaglog should look the same as the Project Path Mappings from above:
 ![Deployment Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_path_mapping.png)
+
+After selecting __Ok__ in the __Deployment__ dialog you can now upload development files from your local machine to your remote machine. I usually select __Automatic__ so that I don't have to right click a file and push it to my remote debug server after every edit:
+![automatic upload](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/automatic_upload.png)
+
+### Debugging
+Using the __Select Run/Debug Configuration__ dropdown in the __Navigation Bar__ near the top of PyCharm select the __Edit Configurations...__ option. You want to check to make sure that your Python interpreter is the remote interpreter we've just created and not one of your local python interpreters:
+![debug settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/debug_settings.png)
+
 ### Rebuilding Image
