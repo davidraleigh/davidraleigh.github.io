@@ -9,19 +9,19 @@ To complete this tutorial you'll need a GCP account with Admin access, you'll ne
 
 ### Firewall Rules
 First off you'll need to create a new firewall rule for your project so you can ssh into the Docker Container's port. We'll use the port number 52022. Go to the table of contents in Google cloud and select Networking and then the Firewall Rules:
-![Networking/Firewall](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/firewall-settings-1.png)
+![Networking/Firewall](https://davidraleigh.github.io/assets/pycharm-remote-debug/firewall-settings-1.png)
 
 The fields you'll have to edit are `Name`, `Target Tags`, `Source IP ranges`, and `Protocols and ports`. You should add a description, but that's optional. If you want to specify that only your IP address can access the machine you should define the `Source IP ranges` as something besides `0.0.0.0/0`. Below you can see all the settings I've used, if you copy all these settings this tutorial should work:
-![Specific SSH Firewall Settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/firewall-settings-2.png)
+![Specific SSH Firewall Settings](https://davidraleigh.github.io/assets/pycharm-remote-debug/firewall-settings-2.png)
 
 ### Create VM with Proper Permissions
 Go to Compute Engine in GCP console table of contents and select `Create an Instance`. You'll want to change the `Boot disk` to be a docker enabled image (in this case the ChromiumOS) and maybe increase the size if you plan on using this for development of lots of different docker images:
 
-![Boot Disk Selection](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/container-optimized-disk.png)
+![Boot Disk Selection](https://davidraleigh.github.io/assets/pycharm-remote-debug/container-optimized-disk.png)
 
 Under the `Firewall` section of your instance creation dialog select the `Allow HTTP traffic` field. You may need to check with your Networking Firewall rules to make sure that port 80 is open for your IP address (by default GCP projects make it open to all addresses). Below the `Firewall` section you'll need to select the `Networking` tab and place the `Target Tags` you defined earlier in the Firewall section of this tutorial (mine was `container-ssh`) in the `Network tags` field:
 
-![Network Tags](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/network-tags.png)
+![Network Tags](https://davidraleigh.github.io/assets/pycharm-remote-debug/network-tags.png)
 
 Once you've finished these settings `Create` your VM and you should be ready to get your VM ready for debugging.
 
@@ -116,7 +116,7 @@ ssh -i ~/.ssh/google_compute_engine root@130.211.210.118 -p 52022
 
 ### Setup PyCharm Development Environment for Debugging
 In PyCharm start a new Flask project called `blog-remote-debug-python`. Leave the `Interpreter` option set to whatever is the current default of your PyCharm environment. 
-![Basic Flask Setup](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/pycharm_remote_debug_3.png)
+![Basic Flask Setup](https://davidraleigh.github.io/assets/pycharm-remote-debug/pycharm_remote_debug_3.png)
 
 
 Update the `blog-remote-debug-python.py` file to match the one in this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/blog-remote-debug-python.py). You'll notice that the `__main__` method has been changed from :
@@ -142,39 +142,39 @@ docker run -p 5000:5000 -it --name=temp-c-flask temp
 Open your browser to http://0.0.0.0:5000/ and again you should see a "Hello World!" message.
 
 Now that we know the image can create a functioning docker container let's see how this works with PyCharm's remote debugger settings. In `PyCharm->Preferences` we'll select the `Project Interpreter` from the lefthand table of contents. To the right of the currently defined interpreter is a cog symbol, like a gear, select that cog button and a drop-down will appear. From the dropdown select `Add Remote`:
-![Cog Button](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/project_interpreter_4.png)
+![Cog Button](https://davidraleigh.github.io/assets/pycharm-remote-debug/project_interpreter_4.png)
 
 In the `Configure Remote Python Interpreter` Diaglog select the `SSH Credentials` radio button. For the `Host` field you'll enter in your remote development VM IP address. For `Port` you'll change the default 22 to 52022. Remember that the remote VM is already using 22 as it's SSH port, so for us to access the remote VM's Docker Container SSH port we mapped the container's port 22 to the VM's port 52022 (that's why we added the 52022 firewall rule). The `Username` field will be `root`, as that's what we defined in the Dockerfile in the https://github.com/davidraleigh/remote-debug-docker repo. In the `Auth type` dropdown select `Key Pair` and then point to the google_compute_engine private key that is the pair to the google_compute_engine.pub file you copied inside of your container. The `Python interpreter path` is the location of the python interpreter on your Docker container:
 
-![interpreter settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/python_interpreter_settings.png)
+![interpreter settings](https://davidraleigh.github.io/assets/pycharm-remote-debug/python_interpreter_settings.png)
 
 Once you've selected `OK` you'll be taken back to the `Project Interpreter` dialog. If you weren't able to copy the pycharm_helpers from above, you'll see PyCharm running a background process where it is uploading all the debug utilities necessary for remote debug. 
 
 With your newly created interpreter selected in the `Project Interpreter` drop down you'll want to update the `Path mappings` field by selecting the Ellipsis, `...`, button:
-![Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/Path_mappings.png)
+![Path Mappings](https://davidraleigh.github.io/assets/pycharm-remote-debug/Path_mappings.png)
 
-In the `Edit Project Path Mappings` dialog you'll set the mapping for your local source to the location of your source code inside of your container. In the case of the tutorial the location of the source code is defined in the Dockerfile at [this line](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png), `COPY . /opt/src/test`. Your dialog should look something like this:
-![Edit Project Path Settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png)
+In the `Edit Project Path Mappings` dialog you'll set the mapping for your local source to the location of your source code inside of your container. In the case of the tutorial the location of the source code is defined in the Dockerfile at [this line](https://davidraleigh.github.io/assets/pycharm-remote-debug/path_mappings_setup.png), `COPY . /opt/src/test`. Your dialog should look something like this:
+![Edit Project Path Settings](https://davidraleigh.github.io/assets/pycharm-remote-debug/path_mappings_setup.png)
 
 Technically, the above Path Mappings step could be skipped by doing the Deployment Configuration steps below.
 
 In order to keep your local source code and your remote source in sync you have to setup a `Deployment Configuration`. This isn't a deployment in the sense of something that your users will interact with. Select `Tools->Deployment->Configuration`:
-![Deployment configuration](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_configuration.png)
+![Deployment configuration](https://davidraleigh.github.io/assets/pycharm-remote-debug/deployment_configuration.png)
 
 In the `Add Server` dialog give your server a name and from the `Type` dropdown select `SFTP`. 
 
 In the `Deployment` dialog, the `Connection` tab should be filled out similarily to the the `Configure Remote Python Interpreter` dialog. for the `Root Path` field select the base path for this tutorial. Once you've filled out the fields press the `Test FTP connection...` button to confirm you're able to connect:
-![deployment](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment.png)
+![deployment](https://davidraleigh.github.io/assets/pycharm-remote-debug/deployment.png)
 
 The __Mappings__ tab in the __Deployment__ diaglog should look the same as the Project Path Mappings from above:
-![Deployment Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_path_mapping.png)
+![Deployment Path Mappings](https://davidraleigh.github.io/assets/pycharm-remote-debug/deployment_path_mapping.png)
 
 After selecting __Ok__ in the __Deployment__ dialog you can now upload development files from your local machine to your remote machine. I usually select __Automatic__ so that I don't have to right click a file and push it to my remote debug server after every edit:
-![automatic upload](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/automatic_upload.png)
+![automatic upload](https://davidraleigh.github.io/assets/pycharm-remote-debug/automatic_upload.png)
 
 ### Debugging
 Using the __Select Run/Debug Configuration__ dropdown in the __Navigation Bar__ near the top of PyCharm select the __Edit Configurations...__ option. You want to check to make sure that your Python interpreter is the remote interpreter we've just created and not one of your local python interpreters:
-![debug settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/debug_settings.png)
+![debug settings](https://davidraleigh.github.io/assets/pycharm-remote-debug/debug_settings.png)
 
 You should now be able to put a breakpoint at the [`Hello World` line](https://github.com/davidraleigh/blog-remote-debug-python/blob/master/blog-remote-debug-python.py#L8) in the blog-remote-debug-python.py file in our sample project, press __^ D__ to debug and once you visit the http://130.211.210.118/ address you'll trigger the breakpoint and be able to look at the variables from your remote docker container. You also should be able to update the blog-remote-debug-python.py file, save it and those changes will be automatically uploaded to your container and demonstrated in your next debugging with PyCharm (sometimes those changes can be experienced within one debug session).
 
@@ -195,3 +195,4 @@ sudo docker stop temp-python-debug
 sudo docker rm temp-python-debug
 sudo docker run -p 52022:22 -p 80:5000 -it --privileged --name=temp-python-debug debug-image
 ```
+
