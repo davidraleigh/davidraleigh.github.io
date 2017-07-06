@@ -148,7 +148,9 @@ In the `Configure Remote Python Interpreter` Diaglog select the `SSH Credentials
 
 ![interpreter settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/python_interpreter_settings.png)
 
-Once you've selected `OK` you'll be taken back to the `Project Interpreter` dialog. With your newly created interpreter selected in the `Project Interpreter` drop down you'll want to update the `Path mappings` field by selecting the Ellipsis, `...`, button:
+Once you've selected `OK` you'll be taken back to the `Project Interpreter` dialog. If you weren't able to copy the pycharm_helpers from above, you'll see PyCharm running a background process where it is uploading all the debug utilities necessary for remote debug. 
+
+With your newly created interpreter selected in the `Project Interpreter` drop down you'll want to update the `Path mappings` field by selecting the Ellipsis, `...`, button:
 ![Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/Path_mappings.png)
 
 In the `Edit Project Path Mappings` dialog you'll set the mapping for your local source to the location of your source code inside of your container. In the case of the tutorial the location of the source code is defined in the Dockerfile at [this line](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png), `COPY . /opt/src/test`. Your dialog should look something like this:
@@ -174,4 +176,22 @@ After selecting __Ok__ in the __Deployment__ dialog you can now upload developme
 Using the __Select Run/Debug Configuration__ dropdown in the __Navigation Bar__ near the top of PyCharm select the __Edit Configurations...__ option. You want to check to make sure that your Python interpreter is the remote interpreter we've just created and not one of your local python interpreters:
 ![debug settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/debug_settings.png)
 
+You should now be able to put a breakpoint at the [`Hello World` line](https://github.com/davidraleigh/blog-remote-debug-python/blob/master/blog-remote-debug-python.py#L8) in the blog-remote-debug-python.py file in our sample project, press __^ D__ to debug and once you visit the http://130.211.210.118/ address you'll trigger the breakpoint and be able to look at the variables from your remote docker container. You also should be able to update the blog-remote-debug-python.py file, save it and those changes will be automatically uploaded to your container and demonstrated in your next debugging with PyCharm (sometimes those changes can be experienced within one debug session).
+
 ### Rebuilding Image
+There will be times when you'll want to checkout a different branch. You could ssh into your container remotely or using the `docker exec` command from within your remote VM and then checkout a different branch (one that matches whatever branch is on your local machine). This will work pretty well for changes in branches. 
+
+At other times there will be large changes to a Dockerfile or an inherited image that requires a rebuild of a machine. To do so you'll need to follow theses commands:
+
+```bash
+gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
+cd /opt/src/blog-remote-debug-python
+sudo git pull origin master
+sudo docker build -t your-special-image-name .
+sudo docker tag your-special-image-name test-image
+cd ~/remote-debug-docker/
+sudo docker build -t debug-image .
+sudo docker stop temp-python-debug
+sudo docker rm temp-python-debug
+sudo docker run -p 52022:22 -p 80:5000 -it --privileged --name=temp-python-debug debug-image
+```
