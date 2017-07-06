@@ -150,4 +150,7 @@ In the `Configure Remote Python Interpreter` Diaglog select the `SSH Credentials
 
 Once you've selected `OK` you'll be taken back to the `Project Interpreter` dialog. With your newly created interpreter selected in the `Project Interpreter` drop down you'll want to update the `Path mappings` field by selecting the Ellipsis, `...`, button:
 ![Path Mappings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/Path_mappings.png)
+
+In the `Edit Project Path Mappings` dialog you'll set the mapping for your local source to the location of your source code inside of your container. In the case of the tutorial the location of the source code is defined in the Dockerfile at [this line](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png), `COPY . /opt/src/test`. Your dialog should look something like this:
+![Edit Project Path Settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png)
 ### Rebuilding Image
