@@ -114,7 +114,7 @@ Now you should be able to ssh into this container from your local dev machine. I
 ssh -i ~/.ssh/google_compute_engine root@130.211.210.118 -p 52022
 ```
 
-### Setup PyCharm Development Environment
+### Setup PyCharm Development Environment for Debugging
 In PyCharm start a new Flask project called `blog-remote-debug-python`. Leave the `Interpreter` option set to whatever is the current default of your PyCharm environment. 
 ![Basic Flask Setup](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/pycharm_remote_debug_3.png)
 
@@ -153,4 +153,11 @@ Once you've selected `OK` you'll be taken back to the `Project Interpreter` dial
 
 In the `Edit Project Path Mappings` dialog you'll set the mapping for your local source to the location of your source code inside of your container. In the case of the tutorial the location of the source code is defined in the Dockerfile at [this line](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png), `COPY . /opt/src/test`. Your dialog should look something like this:
 ![Edit Project Path Settings](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/path_mappings_setup.png)
+
+Technically, the above Path Mappings step could be skipped by doing the Deployment Configuration steps below.
+
+In order to keep your local source code and your remote source in sync you have to setup a `Deployment Configuration`. This isn't a deployment in the sense of something that your users will interact with. Select `Tools->Deployment->Configuration`:
+![Deployment configuration](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/deployment_configuration.png)
+
+
 ### Rebuilding Image
