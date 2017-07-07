@@ -128,14 +128,15 @@ In PyCharm start a new Flask project called *blog-remote-debug-python*. Leave th
 ![Basic Flask Setup](https://davidraleigh.github.io/assets/pycharm-remote-debug/pycharm_remote_debug_3.png)
 
 
-Update the *blog-remote-debug-python.py* file to match the one in this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/blog-remote-debug-python.py). You'll notice that the `__main__` method has been changed from :
+If you've created a new project instead of cloning the *blog-remote-debug-python* repo then you'll need to update the *blog-remote-debug-python.py* file to match the one in this [repo](https://raw.githubusercontent.com/davidraleigh/blog-remote-debug-python/master/blog-remote-debug-python.py). The only thing that is different from PyCharm's default Flask app is that the `__main__` method has been changed from:
 ```python
 app.run()
 ```
-to : 
+to: 
 ```python
 app.run(debug=True, host='0.0.0.0')
 ```
+The reason for this is explained in a Docker forum [here](https://forums.docker.com/t/using-localhost-for-to-access-running-container/3148/2)
 
 In PyCharm you should be able to select *^R* on your keyboard and run this flask project and open your browser to http://0.0.0.0:5000/ and see a "Hello World!" message. Press the "Stop" button in PyCharm's Navigation Bar to end the Flask app.
 
