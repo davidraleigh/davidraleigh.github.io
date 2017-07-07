@@ -3,11 +3,18 @@
 
 Say I have a Docker container running in Google Cloud Platform. Inside that container a custom library interacts with huge amounts of data from Google Cloud Storage. In order to debug that library without suffering from latency issues or egress costs I would need to ssh into the VM and from there use `docker exec` to get into the container. Then I could debug my library using vim or emacs. 
 
-But if I want to use the Remote Debugger feature of PyCharm it becomes a bit more complicated. Below are the hacked together steps for having a GCP development machine host a Docker container where my library can be debugged with PyCharm.
+I wanted to use the Remote Debugger features of PyCharm, but to set up my remote cloud platform development machine for this I needed to go through a number of step. Below is a step-by-step tutorial of how you can setup a remote VM to run a docker container that you can debug into from your local desktop/laptop. 
 
-To complete this tutorial you'll need a GCP account with Admin access, you'll need to have gcloud tools installed on your development machine, and you'll need to have PyCharm Professional (the standard free edition doesn't have remote debugging installed). Understanding some basics off ssh, command line tools and Docker will make this a lot easier.
+To complete this tutorial you'll need a Google Cloud Platform (GCP) account with admin access, you'll need to have [gcloud](https://cloud.google.com/sdk/gcloud/) tools installed on your development machine, and you'll need to have PyCharm Professional (the standard free edition doesn't have remote debugging installed). Understanding some basics off ssh, command line tools and Docker will make this a lot easier.
 
 Notes on the format of the blog: Wherever possible I try to use __bold__ type for user interface elements that you'll interact with, *italics* type for filenames, directory names and values you'll enter in fields, and `code blocks` will be reserved for code examples and bash commands. I'm human, there will be errors.
+
+This tutorial was completed using the following versions:
+PyCharm Professional: 2017.1.4
+GCP VM Image Container-Optimized OS: 59.9460.64.0 stable
+GCP VM Image Docker version: 1.11.2
+gcloud Google Cloud SDK: 159.0.0
+Mac OS: El Capitan 10.11.6 (but this all should work from Windows or Linux as PyCharm is cross platform)
 
 ### Firewall Rules
 First off you'll need to create a new firewall rule for your project so you can ssh into the Docker Container's port. We'll use the port number 52022. Go to the table of contents in Google cloud and select Networking and then the Firewall Rules:
