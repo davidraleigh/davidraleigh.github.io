@@ -1,11 +1,13 @@
 
-# Debugging a Remote Docker Container with PyCharm  
+# Debugging a Remote Docker Container with PyCharm 
 
 Say I have a Docker container running in Google Cloud Platform. Inside that container a custom library interacts with huge amounts of data from Google Cloud Storage. In order to debug that library without suffering from latency issues or egress costs I would need to ssh into the VM and from there use `docker exec` to get into the container. Then I could debug my library using vim or emacs. 
 
 But if I want to use the Remote Debugger feature of PyCharm it becomes a bit more complicated. Below are the hacked together steps for having a GCP development machine host a Docker container where my library can be debugged with PyCharm.
 
-To complete this tutorial you'll need a GCP account with Admin access, you'll need to have gcloud tools installed on your development machine, and you'll need to have PyCharm Professional (the standard free edition doesn't have remote debugging installed).
+To complete this tutorial you'll need a GCP account with Admin access, you'll need to have gcloud tools installed on your development machine, and you'll need to have PyCharm Professional (the standard free edition doesn't have remote debugging installed). Understanding some basics off ssh, command line tools and Docker will make this a lot easier.
+
+Notes on the format of the blog: Wherever possible I try to use __bold__ type for user interface elements that you'll interact with, *italics* type for filenames, directory names and values you'll enter in fields, and `code blocks` will be reserved for code examples and bash commands. I'm human, there will be errors.
 
 ### Firewall Rules
 First off you'll need to create a new firewall rule for your project so you can ssh into the Docker Container's port. We'll use the port number 52022. Go to the table of contents in Google cloud and select Networking and then the Firewall Rules:
@@ -15,7 +17,7 @@ The fields you'll have to edit are __Name__, __Target Tags__, __Source IP ranges
 ![Specific SSH Firewall Settings](https://davidraleigh.github.io/assets/pycharm-remote-debug/firewall-settings-2.png)
 
 ### Create VM with Proper Permissions
-Go to Compute Engine in GCP console table of contents and select __Create an Instance__. You'll want to change the __Boot disk__ to be a docker enabled image (in this case the ChromiumOS) and maybe increase the size if you plan on using this for development of lots of different docker images:
+Go to Compute Engine in GCP console table of contents and select __Create an Instance__. You'll want to change the __Boot disk__ to be a docker enabled image (in this case the *Container-Optimized OS*, a Chromium OS) and maybe increase the size beyond 10 gigs if you plan on using this for development of lots of different docker images (images can be pretty damn large):
 
 ![Boot Disk Selection](https://davidraleigh.github.io/assets/pycharm-remote-debug/container-optimized-disk.png)
 
