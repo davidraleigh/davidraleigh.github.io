@@ -1,5 +1,5 @@
 
-# Debugging a Remote Docker Container with PyCharm 
+# Debugging Code in the Era of Big Data Sets, Cloud Platforms and Docker
 
 Say I have a Docker container running in Google Cloud Platform. Inside that container a custom library interacts with huge amounts of data from Google Cloud Storage. In order to debug that library without suffering from latency issues or egress costs I would need to ssh into the VM and from there use `docker exec` to get into the container. Then I could debug my library using vim or emacs. 
 
