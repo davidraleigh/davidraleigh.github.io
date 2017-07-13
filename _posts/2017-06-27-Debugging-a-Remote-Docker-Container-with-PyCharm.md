@@ -91,7 +91,7 @@ The last thing you'll need for this all to work is to get a hold of the pycharm 
 ```bash
 gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
 cd ~/remote-debug-docker/
-sudo gsutil cp -r gs://raleigh-data/2017.1.1/.pycharm_helpers ./
+sudo gsutil cp -r gs://raleigh-data/2017.1.4/.pycharm_helpers ./
 ```
 
 *If Above Optional Doesn't Work for You*
@@ -99,6 +99,19 @@ sudo gsutil cp -r gs://raleigh-data/2017.1.1/.pycharm_helpers ./
 gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
 cd ~/remote-debug-docker/
 sudo mkdir pycharm_helpers
+```
+
+*Side-Note*
+After you've run your container once, if you don't have a copy of .pycharm_helpers in google storage, you can extract them from your container and that way new images you built will already have them. You can even upload them to your google storage directory:
+```bash
+gcloud compute --project "blog-and-demos" ssh --zone "us-central1-f" "remote-debug-demo"
+cd ~/remote-debug-docker/
+# copy from your docker container to your remote vm, so each new build has a copy of the helpers and your local 
+# pycharm ide doesn't have to upload them each time you create a new image
+sudo docker cp temp-python-debug:/root/.pycharm_helpers ./
+# upload your pycharm helpers so that you can download them to a new remote vm in the future (or some other team
+# can benefit from your pycharm_helpers)
+sudo gsutil cp -r .pycharm_helpers gs://raleigh-data/2017.1.4/
 ```
 
 #### Build Your Debug Image and Get it Running
