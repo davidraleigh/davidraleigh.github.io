@@ -219,3 +219,7 @@ sudo docker rm temp-python-debug
 sudo docker run -p 52022:22 -p 80:5000 -it --privileged --name=temp-python-debug debug-image
 ```
 
+PyCharm will try to protect you from this new Docker container, so you'll get a warning like this:
+![ssh key warning](https://github.com/davidraleigh/davidraleigh.github.io/blob/master/assets/pycharm-remote-debug/new-docker-image-ssh.png)
+
+You can click __Yes__ and all will work fine (unless someone just happens to be eavesdropping at the moment you rebuilt your docker image, but that seems unlikely).
