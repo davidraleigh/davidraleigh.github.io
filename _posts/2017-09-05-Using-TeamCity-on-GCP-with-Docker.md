@@ -89,7 +89,7 @@ Your number in the quotes will allow you to login as admin.
 ### Running a TeamCity Agent
 From the same instance we've installed TeamCity we're going to run a TeamCity agent. mounting /var/run/docker.sock allows for docker-in-docker running of test containers. :
 ```bash
-sudo docker run -it -e SERVER_URL="http://teamcity.echoparklabs.io/" \
+sudo docker run -it -e SERVER_URL="http://teamcity.yourfancyurl.io/" \
   -e AGENT_NAME=agent1 \
   -v /home/davidraleigh/agent1:/data/teamcity_agent/conf \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -99,3 +99,15 @@ sudo docker run -it -e SERVER_URL="http://teamcity.echoparklabs.io/" \
 
 When you go to the __Agents->Unauthorized__ tab in TeamCity, you'll see a list of agents (at this point it should only show the one agent you just started). Your agent may take a little while to download all the latest libraries from TeamCity. Once it has downloaded all the necessary libraries it will say __Connected__ in green as you see in this below image. Click the hyperlink to the left that says __Unauthorized__ and then you will be able to approve your agent's being associated with TeamCity.
 ![Once it says Connected](https://davidraleigh.github.io/assets/teamcity-server-create/authorize-agent.png)
+
+### Updating TeamCity Server
+If you need to update your server it's a breeze. SSH into your GCP instance and do the following:
+
+```bash
+sudo docker stop teamcity-server-instance
+sudo docker rm teamcity-server-instance
+sudo docker pull jetbrains/teamcity-server:latest
+sudo docker run -it --name teamcity-server-instance -v /mnt/disks/teamcity_data/datadir:/data/teamcity_server/datadir  -v /mnt/disks/teamcity_data/logs:/opt/teamcity/logs -p 80:8111 jetbrains/teamcity-server:latest
+```
+
+Since all of your server's data is stored on the mounted disks you don't need to worry about deleting your containers.
