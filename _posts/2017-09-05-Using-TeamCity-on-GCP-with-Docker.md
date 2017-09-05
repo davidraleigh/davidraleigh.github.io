@@ -23,3 +23,40 @@ apt-cache madison docker-ce
 sudo apt-get install docker-ce=17.03.2~ce-0~ubuntu-xenial
 sudo docker run hello-world
 ```
+
+mounting data disk
+one thing I noticed is that this did not work well with the container optimized image provided by google (chromeos). It kept unmounting the disk after each shutdown.
+```bash
+$ sudo lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sdb      8:16   0  200G  0 disk 
+sda      8:0    0   10G  0 disk 
+└─sda1   8:1    0   10G  0 part /
+$ sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+mke2fs 1.42.13 (17-May-2015)
+/dev/sdb contains a ext4 file system
+  last mounted on Tue Sep  5 20:30:57 2017
+Discarding device blocks: done                            
+Creating filesystem with 52428800 4k blocks and 13107200 inodes
+Filesystem UUID: c38706b2-deb6-428c-a924-304018171052
+Superblock backups stored on blocks: 
+  32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+  4096000, 7962624, 11239424, 20480000, 23887872
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done     
+
+$ sudo mkdir -p /mnt/disks/teamcity_data
+$ sudo mount -o discard,defaults /dev/sdb /mnt/disks/teamcity_data
+$ sudo chmod a+w /mnt/disks/teamcity_data/
+$ sudo cp /etc/fstab /etc/fstab.backup
+$ sudo blkid /dev/sdb
+/dev/sdb: UUID="c38706b2-deb6-428c-a924-304018171052" TYPE="ext4"
+$ echo UUID=`sudo blkid -s UUID -o value /dev/sdb` /mnt/disks/disk-1 ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/disk-1 ext4 discard,defaults,nofail 0 2
+$ cat /etc/fstab
+LABEL=cloudimg-rootfs /  ext4 defaults  0 0
+UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/disk-1 ext4 discard,defaults,nofail 0 2
+```
