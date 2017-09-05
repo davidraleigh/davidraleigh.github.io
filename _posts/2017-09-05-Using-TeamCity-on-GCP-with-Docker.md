@@ -61,3 +61,28 @@ $ cat /etc/fstab
 LABEL=cloudimg-rootfs /  ext4 defaults  0 0
 UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/teamcity_data ext4 discard,defaults,nofail 0 2
 ```
+
+### Run TeamCity Server from Instance
+docker will create the datadir and logs directories in the mounted /mnt/disks/teamcity_data directory. mounting /var/run/docker.sock allows for docker-in-docker running of test containers. Once you run this command keep the terminal window open so you can get the authentication token for the web portal super user login.
+
+```bash
+sudo docker run -it --name teamcity-server-instance \
+  -v /mnt/disks/teamcity_data/datadir:/data/teamcity_server/datadir \
+  -v /mnt/disks/teamcity_data/logs:/opt/teamcity/logs \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -p 80:8111 \
+  jetbrains/teamcity-server
+```
+
+### Web Portal
+Go to your ip address for this machine (if you didn't allow http traffic in your vm instance this won't work). Click proceed at the first window and accept the default TeamCity HSQLDB database from the dropdown if you haven't setup a database for your TeamCity Server instance.
+
+Accept your license agreement and then select "Login as Super user"
+![Super user Login](https://davidraleigh.github.io/assets/teamcity-server-create/login-as-super-user.png)
+
+You click "Login as Super user" and in the terminal output from your above `docker run` command you'll see the following:
+```bash
+[2017-09-05 21:56:49,815]   INFO -   jetbrains.buildServer.SERVER - Super user authentication token: "104771920120677263962". To login as Super user use an empty username and this token as a password on the login page. 
+```
+
+Your number in the quotes will allow you to login as admin.
