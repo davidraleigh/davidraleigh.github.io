@@ -55,9 +55,9 @@ $ sudo chmod a+w /mnt/disks/teamcity_data/
 $ sudo cp /etc/fstab /etc/fstab.backup
 $ sudo blkid /dev/sdb
 /dev/sdb: UUID="c38706b2-deb6-428c-a924-304018171052" TYPE="ext4"
-$ echo UUID=`sudo blkid -s UUID -o value /dev/sdb` /mnt/disks/disk-1 ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
-UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/disk-1 ext4 discard,defaults,nofail 0 2
+$ echo UUID=`sudo blkid -s UUID -o value /dev/sdb` /mnt/disks/teamcity_data ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/teamcity_data ext4 discard,defaults,nofail 0 2
 $ cat /etc/fstab
 LABEL=cloudimg-rootfs /  ext4 defaults  0 0
-UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/disk-1 ext4 discard,defaults,nofail 0 2
+UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/teamcity_data ext4 discard,defaults,nofail 0 2
 ```
