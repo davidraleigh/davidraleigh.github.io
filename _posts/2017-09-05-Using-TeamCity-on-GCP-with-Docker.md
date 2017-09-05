@@ -63,7 +63,7 @@ UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/teamcity_data ext4 discard,
 ```
 
 ### Run TeamCity Server from Instance
-docker will create the datadir and logs directories in the mounted /mnt/disks/teamcity_data directory. mounting /var/run/docker.sock allows for docker-in-docker running of test containers. Once you run this command keep the terminal window open so you can get the authentication token for the web portal super user login.
+docker will create the datadir and logs directories in the mounted /mnt/disks/teamcity_data directory. Once you run this command keep the terminal window open so you can get the authentication token for the web portal super user login.
 
 ```bash
 sudo docker run -it --name teamcity-server-instance \
@@ -85,3 +85,14 @@ You click "Login as Super user" and in the terminal output from your above `dock
 ```
 
 Your number in the quotes will allow you to login as admin.
+
+### Running a TeamCity Agent
+From the same instance we've installed TeamCity we're going to run a TeamCity agent. mounting /var/run/docker.sock allows for docker-in-docker running of test containers. :
+```bash
+sudo docker run -it -e SERVER_URL="http://teamcity.echoparklabs.io/" \
+  -e AGENT_NAME=agent1 \
+  -v /home/davidraleigh/agent1:/data/teamcity_agent/conf \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name="teamcity-agent-1" \
+  jetbrains/teamcity-agent
+```
