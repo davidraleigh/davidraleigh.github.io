@@ -96,3 +96,6 @@ sudo docker run -it -e SERVER_URL="http://teamcity.echoparklabs.io/" \
   --name="teamcity-agent-1" \
   jetbrains/teamcity-agent
 ```
+
+When you go to the __Agents->Unauthorized__ tab in TeamCity, you'll see a list of agents (at this point it should only show the one agent you just started). Your agent may take a little while to download all the latest libraries from TeamCity. Once it has downloaded all the necessary libraries it will say __Connected__ in green as you see in this below image. Click the hyperlink to the left that says __Unauthorized__ and then you will be able to approve your agent's being associated with TeamCity.
+![Once it says Connected](https://davidraleigh.github.io/assets/teamcity-server-create/authorize-agent.png)
