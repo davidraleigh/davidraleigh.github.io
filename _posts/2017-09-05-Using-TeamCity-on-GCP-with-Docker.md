@@ -69,7 +69,6 @@ docker will create the datadir and logs directories in the mounted /mnt/disks/te
 sudo docker run -it --name teamcity-server-instance \
   -v /mnt/disks/teamcity_data/datadir:/data/teamcity_server/datadir \
   -v /mnt/disks/teamcity_data/logs:/opt/teamcity/logs \
-  -v /var/run/docker.sock:/var/run/docker.sock \
   -p 80:8111 \
   jetbrains/teamcity-server
 ```
