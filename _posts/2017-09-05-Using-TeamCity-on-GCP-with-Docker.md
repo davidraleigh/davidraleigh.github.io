@@ -4,6 +4,7 @@ Create Instance
 
 
 Install Docker
+taken from https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
 ```bash
 sudo apt-get remove docker docker-engine docker.io
 sudo apt-get update
