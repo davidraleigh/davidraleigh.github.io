@@ -1,9 +1,9 @@
 
-###Create Instance
+### Create Instance
 ![Create an Instance](https://davidraleigh.github.io/assets/teamcity-server-create/create-instance-with-disk.png)
 
 
-###Install Docker
+### Install Docker
 taken from https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
 ```bash
 sudo apt-get remove docker docker-engine docker.io
@@ -24,7 +24,7 @@ sudo apt-get install docker-ce=17.03.2~ce-0~ubuntu-xenial
 sudo docker run hello-world
 ```
 
-###mounting data disk
+### mounting data disk
 one thing I noticed is that this did not work well with the container optimized image provided by google (chromeos). It kept unmounting the disk after each shutdown.
 below is taken from : https://cloud.google.com/compute/docs/disks/add-persistent-disk
 ```bash
