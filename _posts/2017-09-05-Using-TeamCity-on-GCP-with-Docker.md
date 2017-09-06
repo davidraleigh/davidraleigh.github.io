@@ -178,3 +178,39 @@ sudo docker run -it -e SERVER_URL="http://teamcity.yourfancyurl.io/" \
   jetbrains/teamcity-agent:latest
 ```
 Since all of your server's data is stored on the mounted disks you don't need to worry about deleting your containers.
+
+### Using an Agent that Has GCP Gcloud Permissions
+Using this Docker file:
+https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-sdk-docker/ad2078cacf943d005069f48f23c36a8a4aa4dadb/Dockerfile
+
+We can create a Dockerfile for TeamCity Agent that inherits also gets all the benefits of inheriting instance permissions. This way all we need to do when pulling, pushing and building images from gcr.io is use the `gcloud docker -a` command first.
+
+Here is the Dockerfile I created using the above GCP Dockerfile:
+```Dockerfile
+FROM jetbrains/teamcity-agent
+
+ENV CLOUD_SDK_VERSION 168.0.0
+
+ARG INSTALL_COMPONENTS
+RUN apt-get update -qqy && apt-get install -qqy \
+        curl \
+        gcc \
+        python-dev \
+        python-setuptools \
+        apt-transport-https \
+        lsb-release \
+        openssh-client \
+        git \
+    && easy_install -U pip && \
+    pip install -U crcmod && \
+    export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
+    echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    apt-get update && apt-get install -y google-cloud-sdk=${CLOUD_SDK_VERSION}-0 $INSTALL_COMPONENTS && \
+    gcloud config set core/disable_usage_reporting true && \
+    gcloud config set component_manager/disable_update_check true && \
+    gcloud config set metrics/environment github_docker_image
+VOLUME ["/root/.config"]
+```
+
+Now instead of using the `jetbrains/teamcity-agent` image I use this custom image for my agents.
