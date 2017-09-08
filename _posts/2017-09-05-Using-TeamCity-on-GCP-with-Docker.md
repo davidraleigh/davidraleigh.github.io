@@ -98,8 +98,8 @@ Your number in the quotes will allow you to login as admin.
 From the same instance we've installed TeamCity we're going to run a TeamCity agent. mounting /var/run/docker.sock allows for docker-in-docker running of test containers. :
 ```bash
 sudo docker run -it -e SERVER_URL="http://teamcity.yourfancyurl.io/" \
-  -e AGENT_NAME=agent1 \
-  -v /home/davidraleigh/agent1:/data/teamcity_agent/conf \
+  -e AGENT_NAME=agent-1 \
+  -v /home/davidraleigh/agent-1:/data/teamcity_agent/conf \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --name="teamcity-agent-1" \
   jetbrains/teamcity-agent
@@ -171,8 +171,8 @@ sudo docker stop teamcity-agent-1
 sudo docker rm teamcity-agent-1
 sudo docker pull jetbrains/teamcity-agent:latest
 sudo docker run -it -e SERVER_URL="http://teamcity.yourfancyurl.io/" \
-  -e AGENT_NAME=agent1 \
-  -v /home/davidraleigh/agent1:/data/teamcity_agent/conf \
+  -e AGENT_NAME=agent-1 \
+  -v /home/davidraleigh/agent-1:/data/teamcity_agent/conf \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --name="teamcity-agent-1" \
   jetbrains/teamcity-agent:latest
