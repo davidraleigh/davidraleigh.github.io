@@ -214,3 +214,42 @@ VOLUME ["/root/.config"]
 ```
 
 Now instead of using the `jetbrains/teamcity-agent` image I use this custom image for my agents.
+
+### Deleting GCP Instance and Installing on new GCP Instance
+Sometimes we need to delete a GCP instance and get a new VM. Here are the instructions to start your server up again without losing any of your information:
+
+After SSH'ing into your instance you need to mount the drive. __Do NOT Format the drive!!!__ Up above we formatted the drive to prepare it for it's first use, but if you do that now you'll lose all of your CI information
+
+```bash
+sudo lsblk
+sudo mkdir -p /mnt/disks/teamcity_data
+sudo mount -o discard,defaults /dev/sdb /mnt/disks/teamcity_data
+sudo chmod a+w /mnt/disks/teamcity_data/
+sudo cp /etc/fstab /etc/fstab.backup
+echo UUID=`sudo blkid -s UUID -o value /dev/sdb` /mnt/disks/teamcity_data ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+```
+
+Calling `cat /etc/fstab` you should see something like this:
+```bash
+LABEL=cloudimg-rootfs	/	 ext4	defaults	0 0
+UUID=c38706b2-deb6-428c-a924-304018171052 /mnt/disks/teamcity_data ext4 discard,defaults,nofail 0 2
+```
+
+Now use docker to startup your teamcity server that mounts the directory with all your previous instance's information:
+```bash
+sudo docker run -it --name teamcity-server-instance \
+  -v /mnt/disks/teamcity_data/datadir:/data/teamcity_server/datadir \
+  -v /mnt/disks/teamcity_data/logs:/opt/teamcity/logs \
+  -p 80:8111 \
+  jetbrains/teamcity-server
+```
+
+and start the teamcity agent:
+```bash
+sudo docker run -it -e SERVER_URL="http://teamcity.echoparklabs.io/" \
+  -e AGENT_NAME=agent-1 \
+  -v /home/davidraleigh/agent-1:/data/teamcity_agent/conf \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name="teamcity-agent-1" \
+  jetbrains/teamcity-agent
+```
