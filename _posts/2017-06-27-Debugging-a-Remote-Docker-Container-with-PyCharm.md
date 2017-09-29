@@ -16,6 +16,11 @@ This tutorial was completed using the following versions:
 - gcloud Google Cloud SDK: 159.0.0
 - Mac OS: El Capitan 10.11.6 (but this all should work from Windows or Linux as PyCharm is cross platform)
 
+Github repos that will be used in the tutorial:
+https://github.com/davidraleigh/blog-remote-debug-python
+https://github.com/davidraleigh/remote-debug-docker
+
+
 ### Firewall Rules
 First off you'll need to create a new firewall rule for your project so you can ssh into the Docker Container's port. We'll use the port number 52022. Go to the table of contents in Google cloud and select Networking and then the Firewall Rules:
 ![Networking/Firewall](https://davidraleigh.github.io/assets/pycharm-remote-debug/firewall-settings-1.png)
