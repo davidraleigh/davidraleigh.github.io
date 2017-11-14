@@ -1,7 +1,7 @@
 ## Switching from Teamcity's HSQLDB to PostgreSQL hosted by GCP
 There are a few summaries in Teamcity documents about settings and procedures. Here are the links I used:
-https://confluence.jetbrains.com/display/TCD10/Migrating+to+an+External+Database#MigratingtoanExternalDatabase-db_full
-https://confluence.jetbrains.com/display/TCD10/Setting+up+an+External+Database#SettingupanExternalDatabase-PostgreSQL
+[https://confluence.jetbrains.com/display/TCD10/Migrating+to+an+External+Database#MigratingtoanExternalDatabase-db_full](https://confluence.jetbrains.com/display/TCD10/Migrating+to+an+External+Database#MigratingtoanExternalDatabase-db_full)
+[https://confluence.jetbrains.com/display/TCD10/Setting+up+an+External+Database#SettingupanExternalDatabase-PostgreSQL](https://confluence.jetbrains.com/display/TCD10/Setting+up+an+External+Database#SettingupanExternalDatabase-PostgreSQL)
 
 
 ### Creating a GCP Cloud SQL Postgres instance
