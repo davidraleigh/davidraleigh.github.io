@@ -11,7 +11,7 @@ JSON and YAML with Swagger, an alternative to proto, can be used to define micro
 
 If you're interested in learning more about gRPC and Protocol Buffers check out [this talk](https://docs.google.com/presentation/d/1x9s_Kti24HubafpT5gfHGb2xqW6e6SUhbPc6caL0YXU/edit?usp=sharing) I gave at FOSS4G Tanzania.
 
-## BufBuild
+## BufBuild Improves Working with Protocol Buffers
 While working on various projects I have relied on [Namely's docker](https://github.com/namely/docker-protoc) containerized protoc for updating serialization/deserialization code (for a great summary of gRPC and protobuf checkout out this [Namely talk](https://www.youtube.com/watch?v=RoXT_Rkg8LA)). At some point I noticed Uber's [prototool](https://github.com/uber/prototool) in the Namely Dockerfile, and after a recent peek at the Uber prototool repo I saw that it had been deprecated and pointed to [BufBuild](https://github.com/bufbuild/buf). 
 
 So if Namely provides a containerized protoc what's the use of BufBuild? It helps manage building, linting and checking backwards compatibility of your various proto modules. It means less bash scripts in your toolchain and more automated checks on how your microservice messages evolve. 
