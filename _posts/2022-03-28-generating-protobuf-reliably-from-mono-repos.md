@@ -1,5 +1,3 @@
-# Generating Protobuf Reliably from a Mono Repo
-
 As a director of software engineering, possibly the most important challenge is how to keep services running properly. Testing can prevent outages and software bugs, but testing and continuous integration must be balanced so that they don't interfere with the productivity of engineers. 
 
 ## Why Mono Repos?
