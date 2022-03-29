@@ -32,5 +32,5 @@ A few concepts from [Scripts to Rule Them All](https://github.blog/2015-06-30-sc
 
 In addition to BufBuild I added [pre-commit](https://pre-commit.com/) to try and prevent a bad version of a proto from sneaking into the commit history and allowing for false positives when running the local `buf generate` test in `./scripts/lint.sh` 
 
-This version supports code generation for .Net, C++, Python and Java. Future work will add in Golang. 
+This version supports code generation for .Net, C++, Python, Golang, Ruby, Javascript, and Java. Future work will add in gRPC. 
 
